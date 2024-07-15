@@ -1,0 +1,48 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+
+# Initialize the WebDriver (make sure you have the correct path to your WebDriver)
+driver = webdriver.Chrome(executable_path='path/to/chromedriver')
+
+try:
+    # Navigate to the web page
+    driver.get('file:///path/to/your/html/file.html')
+
+    # Wait until the age input is present
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "age-input")))
+
+    # Select gender: Male
+    driver.find_element(By.ID, "male").click()
+
+    # Enter age
+    age_input = driver.find_element(By.ID, "age-input")
+    age_input.send_keys("25")
+
+    # Select nutrient type: Vitamins
+    driver.find_element(By.XPATH, "//input[@name='nut' and @value='Vit']").click()
+
+    # Submit the form
+    driver.find_element(By.XPATH, "//button[contains(text(), 'Submit')]").click()
+
+    # Validate the result table display
+    time.sleep(2)  # wait for 2 seconds to ensure the table has time to update
+
+    nutrients_table = driver.find_element(By.ID, "nutrients-table")
+    if nutrients_table.is_displayed():
+        print("Test Passed: Nutrients table is displayed.")
+    else:
+        print("Test Failed: Nutrients table is not displayed.")
+
+    # Additional validation to ensure the correct column is displayed
+    headers = driver.find_elements(By.XPATH, "//thead/tr/th")
+    for header in headers:
+        if header.is_displayed():
+            print("Displayed Column Header: ", header.text)
+
+finally:
+    # Close the WebDriver
+    driver.quit()
