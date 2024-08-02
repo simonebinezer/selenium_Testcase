@@ -1,0 +1,17 @@
+{
+  "name": "selenium-automation",
+  "version": "1.0.0",
+  "description": "A project for automating web interactions using Selenium WebDriver",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "dependencies": {
+    "selenium-webdriver": "^4.12.0",
+    "chromedriver": "^114.0.0"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "author": "Your Name",
+  "license": "ISC"
+}
